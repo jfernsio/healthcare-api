@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+</head>
+<body>
+    <h2>Register User</h2>
+    <form action="/api/create/user" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+        <label for="height">Height:</label>
+        <input type="number" id="height" placeholder="height in cms" name="height" required><br><br>
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+        <label for="bloodType">Blood Type:</label>
+        <input type="text" id="bloodType" name="bloodType" required><br><br>
+        <button type="submit" id="submit">Register</button>
+        <a href="/api/login">Already have an account? Login</a>
+    </form>
+</body>
+</html>

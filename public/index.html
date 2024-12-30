@@ -1,0 +1,42 @@
+<button id="find-me">Get nearby details</button><br />
+<p id="status"></p>
+<a id="map-link" target="_blank"></a>
+<script>
+    const getBtn = document.getElementById('find-me');
+
+  
+    const getLocat = () => {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+          
+                fetch('/api/save-location/v1', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude,
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Location saved:', data);
+                        document.write(data.features[0].properties.name)
+                    })
+                    .catch((error) => {
+                        console.error('Error saving location:', error);
+                    });
+            },
+            function (error) {
+                console.error('Error getting location:', error);
+            }
+        );
+    };
+
+
+    getBtn.addEventListener('click', getLocat);
+</script>

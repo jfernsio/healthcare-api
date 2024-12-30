@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminder App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { margin-bottom: 20px; }
+    input, button { margin: 5px; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Set Your Reminder </h1>
+  <form action="/api/reminder" method="post" id="reminderForm">
+    <input type="text" id="title" name="title" placeholder="Reminder Title" required />
+    <br>
+    <input type="text" id="description" name="description" placeholder="Reminder Description" required />
+    <br>
+    <input type="datetime-local" id="notifyAt" name="notifyAt" required />
+    <br>
+    <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
+    <br>
+    <button type="submit" id="submit">Register</button>
+    <input type="number" id="dosage" name="dosage" placeholder="Dosage" required />
+<br>
+<select id="frequency" name="frequency" required>
+  <option value="">Select Frequency</option>
+  <option value="daily">Daily</option>
+  <option value="monthly">Monthly</option>
+  <option value="weekly">Weekly</option>
+</select>
+<br>
+  </form>
+  <ul id="reminderList"></ul>
+</body>
+</html>
