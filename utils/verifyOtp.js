@@ -1,9 +1,10 @@
 
 
-const apikey = "8b365578b25e4df48075d28c28f954f2"
+import dotenv from 'dotenv'
+dotenv.config()
 
 const signup = async (email) =>{
-    const url = `https://emailvalidation.abstractapi.com/v1/?api_key=${apikey}&email=${email}`
+    const url = `https://emailvalidation.abstractapi.com/v1/?api_key=${process.env.EMAIL_VERIFY_API_SECRET}&email=${email}`
     try {
         const response = await fetch(url)
         const data = await response.json()
