@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Reminder Form</title>
+  <style>
+    /* Basic reset */
+    body, h1, form {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Container for the form */
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Form styling */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    input[type="datetime-local"] {
+      font-family: Arial, sans-serif;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Focused input fields */
+    input:focus, textarea:focus, select:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Set Your Appointment Reminder</h1>
+    <form action= "/api/apt/reminder"
+    method="post" id="appointmentForm">
+
+      <input type="text" id="title" name="title" placeholder="Appointment Title" required />
+      <input type="datetime-local" id="appointmentTime" name="appointmentTime" required />
+      <input type="text" id="location" name="location" placeholder="Appointment Location" required />
+
+
+      <textarea id="description" name="description" placeholder="Add any notes or details (optional)"></textarea>
+    
+
+      <button type="submit" id="submit">Set Appointment Reminder</button>
+    </form>
+  </div>
+
+</body>
+</html>
