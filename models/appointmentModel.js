@@ -1,7 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 
 const appointmentReminderSchema = new mongoose.Schema({
-    description: { type: String, required: true },
+    title: {type:String, required: true},
+    description: { type: String },
     notifyAt: { type: Date, required: true },
     location: { type: String }, // Optional location for appointments
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -9,3 +10,4 @@ const appointmentReminderSchema = new mongoose.Schema({
   
   const AppointmentReminder = mongoose.model('AppointmentReminder', appointmentReminderSchema);
   
+export default AppointmentReminder

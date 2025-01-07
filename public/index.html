@@ -1,42 +1,104 @@
 <button id="find-me">Get nearby details</button><br />
-<p id="status"></p>
-<a id="map-link" target="_blank"></a>
-<script>
-    const getBtn = document.getElementById('find-me');
+<select id="options">
+    <option value="hospital" default>Hospitals</option>
+<option value="dentist" >Dentist</option>
+<option value="clinic_or_praxis">Clinic</option>
+<option value="pharmacy">Pharmacy</option>
 
-  
+</select>
+<p id="status"></p>
+<div>
+    <a id="map-link"></a>
+</div>
+<script>
+    const getBtn = document.getElementById("find-me");
+    const options = document.getElementById("options");
+    var selectedOption;
+options.addEventListener("change", (e) => {
+    selectedOption = e.target.value;
+    console.log(selectedOption);
+});
+const de = options.value = "hospital";
+
     const getLocat = () => {
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-          
-                fetch('/api/save-location/v1', {
-                    method: 'POST',
+                fetch("/api/save-location/v1", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         latitude: latitude,
                         longitude: longitude,
+                        Option: selectedOption || de,
                     }),
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log('Location saved:', data);
-                        document.write(data.features[0].properties.name)
+                        console.log("Location saved:", data);
+                        const sm = data.features;
+                        console.log(sm);
+                        //                         const {
+                        //     name,
+                        //     formatted: address,
+                        //     lat,
+                        //     lon,
+                        //     website,
+                        //     opening_hours,
+                        //     contact: { phone, email },
+                        //     datasource: {
+                        //         attribution,
+                        //         raw: { amenity },
+                        //     },
+                        // } = sm;
+                        const first5Places = sm.slice(0, 5).map((place) => ({
+                            name: place.properties.name,
+                            address: place.properties.formatted,
+                            phone:
+                                place.properties.datasource.raw.phone || "No phone avilable",
+                            email:
+                                place.properties.datasource.raw.email || "No email avilable",
+                            latitude: place.geometry.coordinates[1],
+                            longitude: place.geometry.coordinates[0],
+                            opening_hours:
+                                place.properties.opening_hours || "Opening hours Not avilable!",
+                            website: place.properties.website || "No website",
+                        }));
+
+                        console.log(first5Places);
+                        // console.log(`View on Map: ${osmLink}`);
+
+                        document.getElementById("status").innerHTML = "";
+                        first5Places.forEach((place, index) => {
+                            const osmLink = `https://www.openstreetmap.org/?mlat=${place.latitude}&mlon=${place.longitude}#map=18/${place.latitude}/${place.longitude}`;
+
+                            const placeHtml = `
+    <h2>${place.name}</h2>
+    <p>Address: ${place.address}</p>
+    <p>Phone: ${place.phone}</p>
+    <p>Email: ${place.email}</p>
+    <p>Opening-hours: ${place.opening_hours}</p>
+ <p>Website: <a href="${place.website}" target="_blank">${place.website}</a></p>
+    <a href="${osmLink}" >view on maps</a>
+  `;
+                            document.getElementById("status").innerHTML += placeHtml;
+                        });
+                        document.getElementById("map-link").innerHTML = osmLink;
+                        getBtn.disabled = true;
                     })
                     .catch((error) => {
-                        console.error('Error saving location:', error);
+                        console.error("Error saving location:", error);
                     });
             },
             function (error) {
-                console.error('Error getting location:', error);
+                console.error("Error getting location:", error);
             }
         );
     };
 
-
-    getBtn.addEventListener('click', getLocat);
+    getBtn.addEventListener("click", getLocat);
 </script>

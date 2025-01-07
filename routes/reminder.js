@@ -1,17 +1,9 @@
 import express from 'express'
-import reminderEmail from '../utils/mails.js'
+import {medReminder,getMedReminder,deleteMedReminder } from '../controllers/mediciens.js'
 const reminderRoute = express.Router()
 
-reminderRoute.post('/',(req,res) =>{
-    const {description,datetime,email} = req.body
-    const reminder =  {
-        description,
-        email,
-        notifyAt: datetime,
-    }
-    console.log(reminder)
-    reminderEmail(reminder)
-    res.send('sent')
-})
 
+reminderRoute.post('/',medReminder)
+reminderRoute.get('/',getMedReminder)
+reminderRoute.delete('/:medId',deleteMedReminder)
 export {reminderRoute} 
