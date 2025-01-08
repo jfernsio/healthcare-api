@@ -19,11 +19,13 @@ const existingUser = await Users.findOne({email})
         }
    
         const token = generateToken(existingUser)
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'Strict'
-        })
+   
+res.cookie('token', token, {
+  httpOnly: true,
+  secure: true, 
+  sameSite: 'none', 
+  maxAge: 24 * 60 * 60 * 1000
+});
         
         return res.status(200).json({ message: 'Login successful' })
     } catch (err) {
