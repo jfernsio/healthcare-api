@@ -6,7 +6,7 @@ dotenv.config()
 
 const verifyJwt = (req, res, next) => {
     const token = req.cookies.token;
-    console.log('reached')
+    // console.log('reached')
     if (!token) return res.status(401).json({ msg: "user is not authorized" });
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) return res.status(401).json({ msg: "invalid token" });

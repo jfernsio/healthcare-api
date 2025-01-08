@@ -4,7 +4,9 @@ import generateToken from "../middlewears/jwt.js"
 const userLogin = async(req,res,next) =>{
     try {
         const {email,password} = req.body
-        const existingUser = await Users.findOne({email})
+        console.log(email,password);
+
+const existingUser = await Users.findOne({email})
         
         if(!existingUser){
             return res.status(404).json({message:'User doesnt Exist, Please Register!'})
@@ -13,7 +15,7 @@ const userLogin = async(req,res,next) =>{
         const isMatch = await bcrypt.compare(password, existingUser.password)
         
         if (!isMatch) {
-            return res.status(401).json({msg: "Invalid password"})
+            return res.status(404).json({msg: "Invalid password"})
         }
    
         const token = generateToken(existingUser)

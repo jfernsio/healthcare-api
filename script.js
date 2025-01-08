@@ -11,6 +11,8 @@ import verifyJwt from './middlewears/verifyJwt.js';
 import { contactRouter } from "./routes/Contacts.js";
 import registerRoute from './routes/register.js'
 import loginRoute from "./routes/login.js";
+import getUserProfile from "./controllers/userProfile.js";
+import getAppointmentHistory from './controllers/appointmentHistory.js';
 import {reminderRoute} from "./routes/reminder.js"
 import appointmentRouter from "./routes/appointment.js";
 import cors from 'cors';
@@ -97,6 +99,8 @@ app.use('/api/apt/reminder',verifyJwt,appointmentRouter)
 app.use('/api/get/apt/reminder',verifyJwt,appointmentRouter)
 app.use('/api/del/apt/reminder',verifyJwt,appointmentRouter)
 
+app.use('/api/user/profile',verifyJwt,getUserProfile)
+app.use('/api/appointments/history',verifyJwt,getAppointmentHistory)
 
 app.use((err, req, res, next) => {
   console.log(err);
