@@ -32,8 +32,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://localhost:3000', // your frontend URL
-  credentials: true
+  origin: 'http://localhost:3000', 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+}));
 }));
 
 const PORT = 4000;
